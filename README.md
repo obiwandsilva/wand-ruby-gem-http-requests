@@ -6,7 +6,11 @@ http_requests is a lib that provides easy methods to make http and https request
 
 Add to your Gemfile:
 
-`gem http_requests` and execute the command `bundle install` on terminal when inside your folder with the Gemfile.
+```ruby
+gem http_requests
+```
+
+Then execute the command `bundle install` on terminal when inside your folder with the Gemfile.
 
 Or install yourself:
 
@@ -14,9 +18,13 @@ Or install yourself:
 
 ## Usage
 
-First, import the gem to you project using `require http_requests`.
+First, import the gem to you project using
 
-Then, follow the bellow examples to make the most simple http get requests possible:
+```ruby
+require http_requests
+```
+
+Then, follow the bellow examples to make the most simple http post and get requests possible:
 
 Simplle HTTP request.
 
