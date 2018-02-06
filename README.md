@@ -49,7 +49,7 @@ res = conn.get({
 # Will generate the uri "http://www.someexample.com/someaction?token=abc123"
 ```
 
-Settings a HTTPS (without certificate validation) connection with a preset header (so every requets will use it):
+Setting up an HTTPS (without certificate validation) connection with a preset header (so every requets will use it):
 
 ```ruby
 settings = {
@@ -61,7 +61,7 @@ conn = Connection.new("https://www.someexample.com", settings)
 
 res = conn.post({
   end_point: "/someaction",
-  body: "{ "token": "abc123" }"
+  body: %q{"{ "token": "abc123" }"}
 })
 
 ```
