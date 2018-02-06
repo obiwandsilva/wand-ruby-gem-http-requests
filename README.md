@@ -20,7 +20,7 @@ Then, follow the bellow examples to make the most simple http get requests possi
 
 Simplle HTTP request.
 
-```
+```ruby
 conn = Connection.new("http://www.someexample.com")
 res = conn.get # Or conn.post
 
@@ -31,7 +31,7 @@ puts res.body
 
 Setting a header and a query string for a request to an specific end point:
 
-```
+```ruby
 conn = Connection.new("http://www.someexample.com")
 res = conn.get({
   end_point: "/someaction"
@@ -43,7 +43,7 @@ res = conn.get({
 
 Settings a HTTPS (without certificate validation) connection with a preset header (so every requets will use it):
 
-```
+```ruby
 settings = {
   header: { "Accept" => "application/json" },
   ssl: true
@@ -60,7 +60,7 @@ res = conn.post({
 
 If you want to use the HTTPS certificate validation, set the certificate path when declaring the settings:
 
-```
+```ruby
 settings = {
   header: { "Accept" => "application/json" },
   ssl: true,
@@ -72,7 +72,7 @@ In order to issue multiple requests to the same connection, use conn.start passi
 request is issued, a connection is opened and automatically closed, then, when a next request is called, another connection
 is opened.
 
-```
+```ruby
 conn.start do
   conn.get
   conn.get
@@ -86,9 +86,9 @@ The SingleConnection is a module that allows the same connection instance to be 
 It works as a Singleton Class.
 
 File 1:
-```
+```ruby
 settings = {
-  ...
+  # ...
 }
 SingleConnection.init("http://www.someexample.com", settings)
 res = SingleConnection.get
@@ -97,7 +97,7 @@ res = SingleConnection.get
 One initialized, you can just use it in another files:
 
 File 2:
-```
+```ruby
 res = SingleConnection.post(end_point: "/anyaction/youwant")
 ```
 
