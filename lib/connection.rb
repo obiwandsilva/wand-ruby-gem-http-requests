@@ -30,9 +30,8 @@ class Connection
     url = "#{@url}#{options[:end_point]}"
 
     unless options[:query_str].empty?
-      url = "#{url}?"
       first = options[:query_str].keys[0]
-      url = "#{url}#{first}=#{options[:query_str][first]}"
+      url = "#{url}?#{first}=#{options[:query_str][first]}"
 
       options[:query_str].each_key do |key|
         next if key == first
@@ -57,8 +56,7 @@ class Connection
     uri = URI("#{@url}#{options[:end_point]}")
 
     http = @started ? @http : get_http(uri)
-    request = Net::HTTP::Post.new(uri.request_uri, @settings[:header].merge(options[:header]))
-    
+    request = Net::HTTP::Post.new(uri.request_uri, @settings[:header].merge(options[:header]))    
     http.request(request, options[:body])
   end
 

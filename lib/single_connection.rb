@@ -20,7 +20,7 @@ module SingleConnection
   end
 
   def start(uri = nil)
-    arg = uri.nil? ? URI(@connection.url) : URI(uri)
-    @connection.start(arg) { |connection| yield }
+    uri = uri.nil? ? URI(@connection.url) : URI(uri)
+    @connection.start(uri) { |connection| yield }
   end
 end
