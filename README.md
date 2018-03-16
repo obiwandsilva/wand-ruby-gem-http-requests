@@ -84,9 +84,9 @@ conn.start do
 end
 ```
 
-### SingleConnection
+### SingleConn
 
-The SingleConnection is a module that allows the same connection instance to be used throughout the entire application.
+The SingleConn is a module that allows the same connection instance to be used throughout the entire application.
 It works as a Singleton Class.
 
 File 1:
@@ -98,11 +98,11 @@ SingleConn.init("http://www.someexample.com", settings)
 res = SingleConn.get
 ```
 
-One initialized, you can just use it in another files:
+Once initialized, you can just use it in other files:
 
 File 2:
 ```ruby
 res = SingleConn.post(end_point: "/anyaction/youwant")
 ```
 
-As seen, SingleConnection works exactly like a normal Connection, but its "instance" can be shared.
+As seen, SingleConn works exactly like a normal Connection, but its "instance" can be shared.
