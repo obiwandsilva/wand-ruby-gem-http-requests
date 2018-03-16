@@ -1,1 +1,1 @@
-%w{connection single_connection}.each { |file| require_relative file }
+%w[http_conn single_conn].each { |file| require_relative file }

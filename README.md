@@ -29,7 +29,7 @@ Then, follow the bellow examples to make the most simple http post and get reque
 Simplle HTTP request.
 
 ```ruby
-conn = Connection.new("http://www.someexample.com")
+conn = HTTPConn.new("http://www.someexample.com")
 res = conn.get # Or conn.post
 
 puts res.message
@@ -40,12 +40,10 @@ puts res.body
 Setting a header and a query string for a request to an specific end point:
 
 ```ruby
-conn = Connection.new("http://www.someexample.com")
-res = conn.get({
-  end_point: "/someaction"
-  header: { "Accept" => "application/json" },
-  query_str: { "token" => "abc123" }
-})
+conn = HTTPConn.new("http://www.someexample.com")
+res = conn.get(end_point: "/someaction"
+               header: { "Accept" => "application/json" },
+               query_str: { "token" => "abc123" })
 # Will generate the uri "http://www.someexample.com/someaction?token=abc123"
 ```
 
@@ -57,12 +55,10 @@ settings = {
   ssl: true
 }
 
-conn = Connection.new("https://www.someexample.com", settings)
+conn = HTTPConn.new("https://www.someexample.com", settings)
 
-res = conn.post({
-  end_point: "/someaction",
-  body: %q{"{ "token": "abc123" }"}
-})
+res = conn.post(end_point: "/someaction",
+                body: %q{"{ "token": "abc123" }"})
 
 ```
 
@@ -98,15 +94,15 @@ File 1:
 settings = {
   # ...
 }
-SingleConnection.init("http://www.someexample.com", settings)
-res = SingleConnection.get
+SingleConn.init("http://www.someexample.com", settings)
+res = SingleConn.get
 ```
 
 One initialized, you can just use it in another files:
 
 File 2:
 ```ruby
-res = SingleConnection.post(end_point: "/anyaction/youwant")
+res = SingleConn.post(end_point: "/anyaction/youwant")
 ```
 
 As seen, SingleConnection works exactly like a normal Connection, but its "instance" can be shared.
