@@ -52,6 +52,21 @@ class HTTPConn
     http.request(request, options[:body])
   end
 
+  def put(options = {})
+    default = {
+      end_point: "",
+      header: {},
+      body: nil
+    }
+    options = default.merge(options)
+    uri = URI("#{@url}#{options[:end_point]}")
+
+    http = @started ? @http : get_http(uri)
+    request = Net::HTTP::Put.new(uri.request_uri,
+                                  settings[:header].merge(options[:header]))
+    http.request(request, options[:body])
+  end
+
   def start(uri = nil)
     @started = true
     @http = uri.nil? ? get_http(URI(@url)) : get_http(URI(uri))
