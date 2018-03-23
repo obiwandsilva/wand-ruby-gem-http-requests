@@ -1,11 +1,11 @@
 require 'json'
-require_relative '../lib/single_connection'
+require_relative '../lib/single_conn'
 
-describe "SingleConnection" do
+describe "SingleConn" do
   describe "#init" do
-    it "instantiate a new SingleConnection object with default connection settings" do
-      SingleConnection.init("http://www.google.com")
-      settings = SingleConnection.get_conn_settings
+    it "instantiate a new SingleConn object with default connection settings" do
+      SingleConn.init("http://www.google.com")
+      settings = SingleConn.conn_settings
 
       expect(settings[:header]).to eq({})
       expect(settings[:ssl]).to eq(false)
@@ -13,15 +13,15 @@ describe "SingleConnection" do
       expect(settings[:read_timeout]).to eq(60)
     end
 
-    it "instantiate a new SingleConnection object with preset connection settings" do
+    it "instantiate a new SingleConn object with preset connection settings" do
       settings = {
         :header => { "Accept" => "application/json" },
         :ssl => true,
         :read_timeout => 90
       }
-      SingleConnection.init("http://www.google.com", settings)
+      SingleConn.init("http://www.google.com", settings)
 
-      set = SingleConnection.get_conn_settings
+      set = SingleConn.conn_settings
 
       expect(set[:header]).to eq({ "Accept" => "application/json" })
       expect(set[:ssl]).to eq(true)
@@ -32,8 +32,8 @@ describe "SingleConnection" do
 
   describe "#get" do
     it "issues a http get request to the specified url" do
-      SingleConnection.init("https://www.googleapis.com", :ssl => true)
-      res = SingleConnection.get({
+      SingleConn.init("https://www.googleapis.com", :ssl => true)
+      res = SingleConn.get({
         :end_point => "/customsearch/v1",
         :query_str => {
           "q" => "silvawand"
@@ -47,23 +47,33 @@ describe "SingleConnection" do
 
   describe "#post" do
     it "issues a http post request to the specified url" do
-      SingleConnection.init("https://viacep.com.br", :ssl => true)
-      res = SingleConnection.post({ :end_point => "/ws/01001000/json" })
+      SingleConn.init("https://viacep.com.br", :ssl => true)
+      res = SingleConn.post({ :end_point => "/ws/01001000/json" })
 
       expect(res.code).to eq("200")
       expect(JSON.parse(res.body)["localidade"]).to eq("São Paulo")
     end
   end
 
+  describe "#put" do
+    it "issues a http put request to the specified url" do
+      conn = SingleConn.init("https://www.mocky.io", :ssl => true)
+      res = SingleConn.put({ :end_point => "/v2/5185415ba171ea3a00704eed" })
+
+      expect(res.code).to eq("200")
+      expect(JSON.parse(res.body)["hello"]).to eq("world")
+    end
+  end
+
   describe "#start" do
     it "allows the usage of the same connection to issue multiple requests" do
-      SingleConnection.init("https://viacep.com.br", :ssl => true)
+      SingleConn.init("https://viacep.com.br", :ssl => true)
       res_get = nil
       res_post = nil
 
-      SingleConnection.start do
-        res_get = SingleConnection.get({ :end_point => "/ws/01001000/json" })
-        res_post = SingleConnection.post({ :end_point => "/ws/01001000/json" })
+      SingleConn.start do
+        res_get = SingleConn.get({ :end_point => "/ws/01001000/json" })
+        res_post = SingleConn.post({ :end_point => "/ws/01001000/json" })
       end
 
       expect(res_get.code).to eq("200")

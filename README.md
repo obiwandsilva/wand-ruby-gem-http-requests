@@ -72,6 +72,18 @@ settings = {
 }
 ```
 
+You also can to use the verbs http PUT or DELETE:
+
+```ruby
+conn = HTTPConn.new("https://www.someexample.com", settings)
+
+res = conn.put(end_point: "/example01/id01",
+                body: %q{"{ "hello": "world" }"})
+
+res = conn.delete(end_point: "/exemple01/id01")
+```
+
+
 In order to issue multiple requests to the same connection, use conn.start passing a block. It is useful because everytime a
 request is issued, a connection is opened and automatically closed, then, when a next request is called, another connection
 is opened.
