@@ -24,6 +24,10 @@ module SingleConn
     @conn.put(options)
   end
 
+  def delete(options = {})
+    @conn.delete(options)
+  end
+
   def start(uri = nil)
     uri = uri.nil? ? URI(@conn.url) : URI(uri)
     @conn.start(uri) { yield }
