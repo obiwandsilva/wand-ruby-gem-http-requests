@@ -52,6 +52,16 @@ describe "HTTPConn" do
     end
   end
 
+  describe "#put" do
+    it "issues a http put request to the specified url" do
+      conn = HTTPConn.new("https://www.mocky.io", :ssl => true)
+      res = conn.put({ :end_point => "/v2/5185415ba171ea3a00704eed" })
+
+      expect(res.code).to eq("200")
+      expect(JSON.parse(res.body)["hello"]).to eq("world")
+    end
+  end
+
   describe "#start" do
     it "allows the usage of the same connection to issue multiple requests" do
       conn = HTTPConn.new("https://viacep.com.br", :ssl => true)
