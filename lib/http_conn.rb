@@ -67,6 +67,21 @@ class HTTPConn
     http.request(request, options[:body])
   end
 
+  def delete(options = {})
+    default = {
+      end_point: "",
+      header: {}
+    }
+    options = default.merge(options)
+    url = query_str("#{@url}#{options[:end_point]}")
+
+    uri = URI(url)
+    http = @started ? @http : get_http(uri)
+    request = Net::HTTP::Delete.new(uri.request_uri,
+                                 settings[:header].merge(options[:header]))
+    http.request(request)
+  end
+
   def start(uri = nil)
     @started = true
     @http = uri.nil? ? get_http(URI(@url)) : get_http(URI(uri))
